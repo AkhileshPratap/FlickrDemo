@@ -33,11 +33,20 @@ class PhotosViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupView()
         setupCollectionView()
         getPhotos()
     }
 
     // MARK: - other functions
+    private func setupView() {
+        self.title = "Flickr Photos"
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .plain, target: self, action: #selector(saveTapped))
+    }
+
+    @objc private func saveTapped() {
+    }
+
     private func setupCollectionView() {
         collectionView.register(type: ImageCollectionViewCell.self)
         collectionView.delegate = self
@@ -75,7 +84,7 @@ extension PhotosViewController: UICollectionViewDataSource, UICollectionViewDele
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let screenWidth = collectionView.frame.width
-        let scaleFactor = (screenWidth / 2)
+        let scaleFactor = (screenWidth / 2) - 6
         
         return CGSize(width: scaleFactor, height: scaleFactor)
     }

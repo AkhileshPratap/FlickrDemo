@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 extension UICollectionView {
     func dequeue<T: UICollectionViewCell>(type: T.Type, indexPath: IndexPath) -> T {
@@ -19,14 +20,11 @@ extension UICollectionView {
 }
 
 extension UIView {
-    var indentifer: String {
-        return "\(self)"
-    }
-    
+
     static var identifer: String {
         return "\(self)"
     }
-    
+
     static func nib() -> UINib {
         return UINib(nibName: identifer, bundle: nil)
     }
@@ -38,3 +36,15 @@ extension UIWindow {
         return UIApplication.shared.windows.first { $0.isKeyWindow }
     }
 }
+
+extension UIImageView {
+    func setImage(urlString: String, placeHolder: UIImage? = nil) {
+        guard let url = URL(string: urlString) else {
+            self.image = placeHolder
+            return
+        }
+        let imageResource = ImageResource(downloadURL: url, cacheKey: urlString)
+        kf.setImage(with: imageResource, placeholder: placeHolder)
+    }
+}
+

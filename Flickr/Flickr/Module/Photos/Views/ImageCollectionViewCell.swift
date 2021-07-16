@@ -18,5 +18,6 @@ class ImageCollectionViewCell: UICollectionViewCell {
 
     // MARK: cell setup
     func loadImage(url: String) {
+        cellImageView.setImage(urlString: url)
     }
 }
