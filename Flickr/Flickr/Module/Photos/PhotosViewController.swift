@@ -12,10 +12,25 @@ class PhotosViewController: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
 
     // MARK: variables
-    private let viewModel: PhotosViewModel = PhotosViewModel(service: nil)
-    private var selectedImage: UIImage?
+    private let viewModel: PhotosViewModel
+    private let assember = Assembler()
 
     // MARK: - view life cycle functions
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        viewModel = assember.viewModel()
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+    }
+
+    init(viewModel: PhotosViewModel) {
+        self.viewModel = assember.viewModel()
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        self.viewModel = assember.viewModel()
+        super.init(coder: coder)
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupCollectionView()
