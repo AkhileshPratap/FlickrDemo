@@ -14,6 +14,7 @@ class PhotosViewController: UIViewController {
     // MARK: variables
     private let viewModel: PhotosViewModel
     private let assember = Assembler()
+    private var selectedImage: UIImage?
 
     // MARK: - view life cycle functions
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
@@ -45,6 +46,10 @@ class PhotosViewController: UIViewController {
     }
 
     @objc private func saveTapped() {
+        guard let image = selectedImage else {
+            return
+        }
+        UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
     }
 
     private func setupCollectionView() {
@@ -91,6 +96,8 @@ extension PhotosViewController: UICollectionViewDataSource, UICollectionViewDele
 
     func collectionView(_ collectionView: UICollectionView,
                         didSelectItemAt indexPath: IndexPath) {
+        guard let cell = collectionView.cellForItem(at: indexPath) as? ImageCollectionViewCell else { return }
+        self.selectedImage = cell.cellImageView.image
     }
 
 }

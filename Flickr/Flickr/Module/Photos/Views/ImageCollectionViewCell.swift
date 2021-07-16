@@ -16,6 +16,16 @@ class ImageCollectionViewCell: UICollectionViewCell {
         // Initialization code
     }
 
+    override var isSelected: Bool {
+        didSet {
+            if self.isSelected {
+                self.backgroundColor = .gray
+            } else {
+                self.backgroundColor = .none
+            }
+        }
+    }
+
     // MARK: cell setup
     func loadImage(url: String) {
         cellImageView.setImage(urlString: url)
