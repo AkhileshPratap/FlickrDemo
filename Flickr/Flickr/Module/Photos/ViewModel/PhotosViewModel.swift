@@ -16,10 +16,12 @@ protocol PhotosUseCase {
 class PhotosViewModel: PhotosUseCase {
 
     // MARK: properties
+    private let service: APIServiceProtocol
     private var photos: [Photo] = []
 
     // MARK: - initialize view model
-    init() {
+    init(service: APIServiceProtocol?) {
+        self.service = service!
     }
     
 }
@@ -42,8 +44,16 @@ extension PhotosViewModel {
         return nil
     }
 
-    //
     func getPhotos(completion: @escaping (Result<Bool, Error>) -> Void) {
-
+        service.getPhotos { [weak self](result) in
+            switch result {
+            case .success(let model):
+                self?.photos = model?.photos?.photo ?? []
+                let status = ((self?.photos ?? []).count > 0)
+                completion(.success(status))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
     }
 }

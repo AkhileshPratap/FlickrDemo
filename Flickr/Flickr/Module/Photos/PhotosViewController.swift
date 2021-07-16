@@ -12,7 +12,7 @@ class PhotosViewController: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
 
     // MARK: variables
-    private let viewModel: PhotosViewModel = PhotosViewModel()
+    private let viewModel: PhotosViewModel = PhotosViewModel(service: nil)
     private var selectedImage: UIImage?
 
     // MARK: - view life cycle functions
@@ -54,7 +54,7 @@ extension PhotosViewController: UICollectionViewDataSource, UICollectionViewDele
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeue(type: ImageCollectionViewCell.self, indexPath: indexPath)
-        cell.configureImage(url: viewModel.getPhotoForIndexPath(indexPath)?.url_m ?? "")
+        cell.loadImage(url: viewModel.getPhotoForIndexPath(indexPath)?.url_m ?? "")
         return cell
     }
     
